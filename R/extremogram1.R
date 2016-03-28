@@ -11,6 +11,7 @@
 #'                no plot is created.
 #' @param cutoff The cutoff of the y-axis on the plot (a number between 0 and 1, default is 1).
 #' @param start The lag that the extremogram plots starts at (an integer not greater than \code{maxlag}, default is 0).
+#' @param ... further arguments: plot and axis names.
 #' @return Extremogram values and a plot (if requested).
 #' @references \enumerate{
 #'             \item Davis, R. A., Mikosch, T., & Cribben, I. (2012). Towards estimating extremal 
@@ -34,11 +35,11 @@
 #' extremogram1(G, quant, maxlag, type, 1, 1, 0)
 #' @export 
 
-extremogram1 = function(x, quant, maxlag, type, ploting=1, cutoff=1, start=0) {
+extremogram1 = function(x, quant, maxlag, type, ploting=1, cutoff=1, start=0, ...) {
   
   level = quantile(x,prob = quant)
   
-  n     = length(x);      rhohat = rep(0,maxlag)
+  n     = length(x);      rhohat = rep(0,maxlag, ...)
   if (type == 1)
   { rhohat[1] = 1
     for ( i in 1:(maxlag-1)){
@@ -56,10 +57,17 @@ extremogram1 = function(x, quant, maxlag, type, ploting=1, cutoff=1, start=0) {
     }
   if (ploting == 1)
   {
-    plot((start:(maxlag-1)),rhohat[(start+1):maxlag],type="n",xlab="lag",ylab="extremogram",ylim=c(0,cutoff))
-    lines((start:(maxlag-1)),rhohat[(start+1):maxlag],col=1,lwd=1,type="h")
-    abline((0:(maxlag-1)),0,col=1,lwd=1)
+    plot.extr(rhohat, start = start, maxlag = maxlag, cutoff = cutoff, ...)
   }
   return(rhohat)  
 }
 
+plot.extr = function(x, start, maxlag, cutoff = cutoff, xlab = "lag", ylab = "extremogram",
+                      main = "Extremogram plot"){
+  
+  plot((start:(maxlag-1)), x[(start+1):maxlag], type="n", 
+         xlab = xlab, ylab = ylab , ylim=c(0,cutoff), main = main)
+  lines((start:(maxlag-1)), x[(start+1):maxlag], col=1, lwd=1, type="h")
+  abline((0:(maxlag-1)),0,col=1,lwd=1)
+  
+}

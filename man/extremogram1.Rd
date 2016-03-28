@@ -4,7 +4,8 @@
 \alias{extremogram1}
 \title{Sample univariate extremogram}
 \usage{
-extremogram1(x, quant, maxlag, type, ploting = 1, cutoff = 1, start = 0)
+extremogram1(x, quant, maxlag, type, ploting = 1, cutoff = 1, start = 0,
+  ...)
 }
 \arguments{
 \item{x}{Univariate time series (a vector).}
@@ -22,6 +23,8 @@ no plot is created.}
 \item{cutoff}{The cutoff of the y-axis on the plot (a number between 0 and 1, default is 1).}
 
 \item{start}{The lag that the extremogram plots starts at (an integer not greater than \code{maxlag}, default is 0).}
+
+\item{...}{further arguments: plot and axis names.}
 }
 \value{
 Extremogram values and a plot (if requested).

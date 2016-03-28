@@ -15,6 +15,7 @@
 #' @param start The lag that the extremogram plots starts at (an integer not greater than \code{maxlag}, default is 1).
 #' @param cutoff The cutoff of the y-axis on the plot (a number between 0 and 1, default is 1).
 #' @param alpha Significance level for the confidence bands (a number between 0 and 1, default is 0.05).
+#' @param ... further arguments: plot and axis names.
 #' @return Returns a plot of the confidence bands for the sample univariate extremogram.
 #' @references \enumerate{
 #'             \item Davis, R. A., Mikosch, T., & Cribben, I. (2012). Towards estimating extremal 
@@ -41,7 +42,7 @@
 #' extremogram1(G, quant, maxlag, type, 1, 1, 0)
 #' bootconf1(G, R, l, maxlag, quant, type, par, 1, 1, 0.05)
 #' @export 
-bootconf1 = function(x, R, l, maxlag, quant, type, par, start=1, cutoff=1, alpha=0.05) {
+bootconf1 = function(x, R, l, maxlag, quant, type, par, start=1, cutoff=1, alpha=0.05, ...) {
   
 if (par == 1){
   n = parallel::detectCores()
@@ -69,9 +70,7 @@ if (par == 1){
     pocket[i,3] = quantile(mat[,i],prob = (1-alpha/2))
   }
   
-  plot(start:(k-1+start),pocket[start:(k-1+start),2],lty=1,lwd=2,
-       ylim=c(0,cutoff),type="l",ylab="extremogram",xlab="lag")
-  lines(start:(k-1+start),pocket[start:(k-1+start),3],lty=4,lwd=2)
+  plot.boot(pocket, start = start, cutoff = cutoff, k = k, ...)
 }
 
 else{
@@ -97,10 +96,16 @@ else{
     pocket[i,3] = quantile(mat[,i],prob = (1-alpha/2))
   }
   
-  plot(start:(k-1+start),pocket[start:(k-1+start),2],lty=1,lwd=2,
-       ylim=c(0,cutoff),type="l",ylab="extremogram",xlab="lag")
-  lines(start:(k-1+start),pocket[start:(k-1+start),3],lty=4,lwd=2)
+  plot.boot(pocket, start = start, cutoff = cutoff, k = k, ...)
 }
   
 }
 
+
+plot.boot = function(x, start, cutoff, k, xlab = "lag", ylab = "extremogram",
+                     main = "Bootstrap confidence intervals for extremogram"){
+  
+  plot(start:(k-1+start),x[start:(k-1+start),1],lty=1,lwd=2,
+       ylim=c(0,cutoff),type="l",ylab = ylab,xlab = xlab, main = main)
+  lines(start:(k-1+start),x[start:(k-1+start),3],lty=4,lwd=2)
+}

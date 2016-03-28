@@ -13,6 +13,7 @@
 #' @param histogram An extremogram plot. If histogram = 1, a plot is created (default). If histogram = 0,
 #'                 no plot is created.
 #' @param cutoff The cutoff of the y-axis on the plot (a number between 0 and 1, default is 1).
+#' @param ... further arguments: plot and axis names.
 #' @return Extremogram values, return time for extreme events, mean return time and a plot (if requested).
 #' @references \enumerate{
 #'             \item Davis, R. A., Mikosch, T., & Cribben, I. (2012). Towards estimating extremal 
@@ -36,7 +37,7 @@
 #' 
 #' extremogramr(G, type, maxlag, uplevel, lowlevel, 1, 1)
 #' @export 
-extremogramr = function(x, type, maxlag, uplevel=1, lowlevel=0, histogram=1, cutoff=1) {  
+extremogramr = function(x, type, maxlag, uplevel=1, lowlevel=0, histogram=1, cutoff=1, ...) {  
   
   n   = length(x); mat = mat = rep(0,n)
   if (type == 1){ 
@@ -74,12 +75,7 @@ extremogramr = function(x, type, maxlag, uplevel=1, lowlevel=0, histogram=1, cut
     return_time[i] = (junk[i+1,1] - junk[i,1])
   }
   if (histogram == 1) {	
-    MASS::truehist(return_time, 
-                   nbins = max(return_time),
-                   xlim=c(0,(maxlag-1)),
-                   col=0,
-                   prob=TRUE,
-                   ylim=c(0,cutoff))
+    plot.return(return_time, maxlag = maxlag, cutoff = cutoff,...)
   }
   
   aa    = as.matrix(table(return_time))
@@ -91,4 +87,18 @@ extremogramr = function(x, type, maxlag, uplevel=1, lowlevel=0, histogram=1, cut
   
   return(list(aa, return_time, mean(return_time)))
   
+}
+
+
+plot.return = function(x, maxlag = maxlag, cutoff = cutoff, ylab = "extremogram", 
+                       xlab = "lag", main = "Return time extremogram plot"){
+  MASS::truehist(x, 
+                 nbins = max(x),
+                 xlim=c(0,(maxlag-1)),
+                 col=0,
+                 prob=TRUE,
+                 ylim=c(0,cutoff),
+                 main = main,
+                 ylab = ylab,
+                 xlab = xlab)
 }

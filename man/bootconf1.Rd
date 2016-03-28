@@ -5,7 +5,7 @@
 \title{Confidence bands for the sample univariate extremogram}
 \usage{
 bootconf1(x, R, l, maxlag, quant, type, par, start = 1, cutoff = 1,
-  alpha = 0.05)
+  alpha = 0.05, ...)
 }
 \arguments{
 \item{x}{Univariate time series (a vector).}
@@ -30,6 +30,8 @@ no parallelization will be used.}
 \item{cutoff}{The cutoff of the y-axis on the plot (a number between 0 and 1, default is 1).}
 
 \item{alpha}{Significance level for the confidence bands (a number between 0 and 1, default is 0.05).}
+
+\item{...}{further arguments: plot and axis names.}
 }
 \value{
 Returns a plot of the confidence bands for the sample univariate extremogram.

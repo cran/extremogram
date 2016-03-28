@@ -15,6 +15,7 @@
 #'                no plot is created.
 #' @param cutoff The cutoff of the y-axis on the plot (a number between 0 and 1, default is 1).
 #' @param start The lag that the extremogram plots starts at (an integer not greater than \code{maxlag}, default is 0).
+#' @param ... further arguments: plot and axis names.
 #' @return Cross extremogram values and a plot (if requested).
 #' @references \enumerate{
 #'             \item Davis, R. A., Mikosch, T., & Cribben, I. (2012). Towards estimating extremal 
@@ -42,7 +43,7 @@
 #' extremogram2(data, quant, quant, maxlag, type, 1, 1, 0)
 #' @export 
 
-extremogram2 = function(a, quant1, quant2, maxlag, type, ploting=1, cutoff=1, start=0) {
+extremogram2 = function(a, quant1, quant2, maxlag, type, ploting=1, cutoff=1, start=0, ...) {
   
   x=a[,1]
   y=a[,2]
@@ -80,10 +81,7 @@ extremogram2 = function(a, quant1, quant2, maxlag, type, ploting=1, cutoff=1, st
   
   
   if (ploting == 1) {
-    plot((start:(maxlag-1)),rhohat[(start+1):maxlag],type="n",xlab="lag",ylab="extremogram",ylim=c(0,cutoff))
-    lines((start:(maxlag-1)),rhohat[(start+1):maxlag],col=1,lwd=1,type="h")
-    abline((0:(maxlag-1)),0,col=1,lwd=1)
-    
+    plot.extr(rhohat, start = start, maxlag = maxlag, cutoff = cutoff, ...) 
   }
   
   return(rhohat)	
