@@ -5,7 +5,7 @@
 \title{Sample return time extremogram}
 \usage{
 extremogramr(x, type, maxlag, uplevel = 1, lowlevel = 0, histogram = 1,
-  cutoff = 1, ...)
+  cutoff = 1)
 }
 \arguments{
 \item{x}{Univariate time series (a vector).}
@@ -26,8 +26,6 @@ extremogram is estimated.}
 no plot is created.}
 
 \item{cutoff}{The cutoff of the y-axis on the plot (a number between 0 and 1, default is 1).}
-
-\item{...}{further arguments: plot and axis names.}
 }
 \value{
 Extremogram values, return time for extreme events, mean return time and a plot (if requested).

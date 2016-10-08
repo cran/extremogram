@@ -16,7 +16,6 @@
 #' @param start The lag that the extremogram plots starts at (an integer not greater than \code{maxlag}, default is 1).
 #' @param cutoff The cutoff of the y-axis on the plot (a number between 0 and 1, default is 1).
 #' @param alpha Significance level for the confidence bands (a number between 0 and 1, default is 0.05).
-#' @param ... further arguments: plot and axis names.
 #' @return Returns a plot of the confidence bands for the sample cross extremogram.
 #' @references \enumerate{
 #'             \item Davis, R. A., Mikosch, T., & Cribben, I. (2012). Towards estimating extremal 
@@ -47,7 +46,7 @@
 #' extremogram2(data, quant, quant, maxlag, type, 1, 1, 0)  
 #' bootconf2(data, R, l, maxlag, quant, quant, type, par, 1, 1, 0.05)  
 #' @export 
-bootconf2 = function(x, R, l, maxlag, quant1, quant2, type, par, start=1, cutoff=1, alpha=0.05, ...) {
+bootconf2 = function(x, R, l, maxlag, quant1, quant2, type, par, start=1, cutoff=1, alpha=0.05) {
 
 if (par == 1){  
   n = parallel::detectCores()
@@ -76,7 +75,9 @@ if (par == 1){
     pocket[i,3] = quantile(mat[,i],prob = (1-alpha/2))
   }
   
-  plot.boot(pocket, start = start, cutoff = cutoff, k = k, ...)
+  plot(start:(k-1+start),pocket[start:(k-1+start),2],lty=1,lwd=2,
+       ylim=c(0,cutoff),type="l",ylab="extremogram",xlab="lag")
+  lines(start:(k-1+start),pocket[start:(k-1+start),3],lty=4,lwd=2)
 }
 
 else{
@@ -103,9 +104,9 @@ else{
     pocket[i,3] = quantile(mat[,i],prob = (1-alpha/2))
   }
   
-  plot.boot(pocket, start = start, cutoff = cutoff, k = k, ...)
+  plot(start:(k-1+start),pocket[start:(k-1+start),2],lty=1,lwd=2,
+       ylim=c(0,cutoff),type="l",ylab="extremogram",xlab="lag")
+  lines(start:(k-1+start),pocket[start:(k-1+start),3],lty=4,lwd=2)
 }
   
 }
-
-

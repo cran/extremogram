@@ -112,28 +112,28 @@ permboot2 = function(a,quant1, quant2, maxlag,type) {
   if (type == 1) { 
     for ( i in 1:maxlag) {
       rhohat[i]=length((1:(n-i))[x[1:(n-i+1)] > level1 & y[i:n]> level2])
-      rhohat[i]=rhohat[i]/length((1:n)[x[1:(n-i+1)]>level1])
+      rhohat[i]=rhohat[i]/length((1:(n-i))[x[1:(n-i+1)]>level1])
     }
   }
   else
     if (type == 2) {
       for ( i in 1:maxlag) {
         rhohat[i]=length((1:(n-i))[x[1:(n-i+1)] < level1 & y[i:n]< level2])
-        rhohat[i]=rhohat[i]/length((1:n)[x[1:(n-i+1)] < level1])
+        rhohat[i]=rhohat[i]/length((1:(n-i))[x[1:(n-i+1)] < level1])
       }
     }
   else
     if (type == 3) {
       for ( i in 1:maxlag) {
         rhohat[i]=length((1:(n-i))[x[1:(n-i+1)] < level1 & y[i:n]> level2])
-        rhohat[i]=rhohat[i]/length((1:n)[x[1:(n-i+1)] < level1])
+        rhohat[i]=rhohat[i]/length((1:(n-i))[x[1:(n-i+1)] < level1])
       }
     }
   else
     if (type == 4) {
       for ( i in 1:maxlag) {
         rhohat[i]=length((1:(n-i))[x[1:(n-i+1)] > level1 & y[i:n]< level2])
-        rhohat[i]=rhohat[i]/length((1:n)[x[1:(n-i+1)] > level1])
+        rhohat[i]=rhohat[i]/length((1:(n-i))[x[1:(n-i+1)] > level1])
       }
     }
   

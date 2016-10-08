@@ -103,7 +103,7 @@ permboot1 = function(x, quant, maxlag, type){
     rhohat[1] = 1
     for ( i in 1:(maxlag-1)){
       rhohat[i+1]=length((1:(n-i))[x[1:(n-i)] > level & x[(i+1):n]> level])
-      rhohat[i+1]=rhohat[i+1]/length((1:n)[x[1:(n-i)]>level])
+      rhohat[i+1]=rhohat[i+1]/length((1:(n-i))[x[1:(n-i)]>level])
     }
   }
   else
@@ -111,7 +111,7 @@ permboot1 = function(x, quant, maxlag, type){
       rhohat[1] = 1
       for ( i in 1:(maxlag-1)){
         rhohat[i+1]=length((1:(n-i))[x[1:(n-i)] < level & x[(i+1):n]< level])
-        rhohat[i+1]=rhohat[i+1]/length((1:n)[x[1:(n-i)]<level])
+        rhohat[i+1]=rhohat[i+1]/length((1:(n-i))[x[1:(n-i)]<level])
       }
     }
   
